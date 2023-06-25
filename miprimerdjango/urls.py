@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from miprimerdjango import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.inicio),
@@ -24,4 +25,4 @@ urlpatterns = [
     path('fecha-actual/', views.fecha_actual),
     path('saludar/', views.saludar),
     path('bienvenida/<str:nombre>/<str:apellido>', views.bienvenida),  
-]   
+]
