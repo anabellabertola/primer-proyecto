@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
-
+from inicio.models import Perro
 #v1
 #def inicio(request):
  #   return HttpResponse('Hola soy tu inicio')
@@ -35,9 +35,6 @@ from django.template import Template, Context, loader
     #V3
     
 def inicio(resquest):
-   # archivo = open(r'C:\Users\anabe\OneDrive\Escritorio\Mi_primer_django\templates\inicio.html', 'r')
-    #template = Template(archivo.read())
-    #archivo.close()
     
     template = loader.get_template('inicio.html')
     
@@ -55,6 +52,7 @@ def inicio(resquest):
     renderizar_template = template.render(diccionario)
     return HttpResponse(renderizar_template)
 
+
 def segunda_vista(request):
     return HttpResponse('<h1>Soy la segunda vista</h1>')
 
@@ -67,3 +65,14 @@ def saludar(request):
 
 def bienvenida(request, nombre, apellido):
     return HttpResponse(f'Bienvenido/a {nombre.title()} {apellido.title()}!!!')
+
+def crear_perro(request, nombre, edad):
+    template = loader.get_template('crear_perro.html')
+    perro = Perro(nombre=nombre, edad=edad)
+    perro.save()
+    diccionario = {
+       'perro': perro,
+    }
+    
+    renderizar_template = template.render(diccionario)
+    return HttpResponse(renderizar_template)
