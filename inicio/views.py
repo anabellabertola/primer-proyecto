@@ -1,10 +1,18 @@
+from typing import Any, Dict
 from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
 from inicio.models import Perro
-from django.shortcuts import render
-from inicio.form import CrearPerroFormulario, BuscarPerroFormulario
+from django.shortcuts import render, redirect
+from inicio.form import CrearPerroFormulario, BuscarPerroFormulario, ModificarPerroFormulario
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 #v1
+
 #def inicio(request):
  #   return HttpResponse('Hola soy tu inicio')
 
@@ -84,7 +92,7 @@ from inicio.form import CrearPerroFormulario, BuscarPerroFormulario
 
 
 #v4
-
+@login_required
 def prueba(request):
     
    # template = loader.get_template('inicio.html')
@@ -166,22 +174,93 @@ def bienvenida(request, nombre, apellido):
 
 
 #v4  
-def crear_perro(request):
+#def crear_perro(request):
+ #   
+  #  if request.method == "POST":
+   #     formulario = CrearPerroFormulario(request.POST)
+   #     if formulario.is_valid():
+   #         info = formulario.cleaned_data
+   #         perro = Perro(nombre=info['nombre'], edad=info['edad'])
+   #         perro.save()
+   #         return redirect('inicio:listar_perros')               
+   #     else:
+   #         return render(request, 'inicio/crear_perro.html', {'formulario': formulario})               
     
-    if request.method == "POST":
-        formulario = CrearPerroFormulario(request.POST)
-        if formulario.is_valid():
-            info = formulario.cleaned_data
-            perro = Perro(nombre=info['nombre'], edad=info['edad'])
-            perro.save()
-            return render(request, 'listar_perros.html')               
-        else:
-            return render(request, 'crear_perro.html', {'formulario': formulario})               
-    
-    formulario = CrearPerroFormulario()
-    return render(request, 'inicio/crear_perro.html', {'formulario': formulario})
+    #formulario = CrearPerroFormulario()
+   # return render(request, 'inicio/crear_perro.html', {'formulario': formulario})
   
 def listar_perros(request):
+    formulario = BuscarPerroFormulario(request.GET)
+    if formulario.is_valid():
+        nombre_a_buscar = formulario.cleaned_data['nombre']
+        listado_de_perros = Perro.objects.filter(nombre__icontains=nombre_a_buscar)
+        
+    formulario = BuscarPerroFormulario()        
+    return render(request, 'inicio/listar_perros.html', {'formulario': formulario, 'perros': listado_de_perros})
   
-    formulario = BuscarPerroFormulario()
-    return render(request, 'inicio/listar_perros.html', {'formulario': formulario})
+def eliminar_perro(request, perro_id):
+    
+    perro = Perro.objects.get(id=perro_id)
+    perro.delete()
+    
+    return redirect('inicio:listar_perros')
+
+def modificar_perro(request, perro_id):
+    perro_a_modificar = Perro.objects.get(id=perro_id)               
+  
+    if request.method == 'POST':
+        formulario = ModificarPerroFormulario(request.POST)
+        if formulario.is_valid():
+            info = formulario.cleaned_data
+            perro_a_modificar.nombre = info['nombre']
+            perro_a_modificar.edad = info['edad']
+            perro_a_modificar.save()
+            return redirect('inicio:listar_perros')
+        else:
+            return render(request, 'inicio/modificar_perro.html', {'formulario': formulario})
+    
+    formulario = ModificarPerroFormulario(initial={'nombre': perro_a_modificar.nombre, 'edad': perro_a_modificar.edad})
+    return render(request, 'inicio/modificar_perro.html', {'formulario': formulario})
+
+
+class CrearPerro(CreateView):
+    model = Perro
+    template_name = 'inicio/CBV/crear_perro_CBV.html'
+    fields = ['nombre', 'edad', 'descripcion']
+    success_url = reverse_lazy('inicio:listar_perros')
+    
+class ListarPerros(ListView):
+    model = Perro
+    template_name = "inicio/CBV/listar_perros_CBV.html"
+    context_object_name = 'perros'
+    
+    def get_queryset(self):
+        listado_de_perros = []
+        formulario = BuscarPerroFormulario(self.request.GET)
+        if formulario.is_valid():
+            nombre_a_buscar = formulario.cleaned_data['nombre']
+            listado_de_perros = Perro.objects.filter(nombre__icontains=nombre_a_buscar)
+        return listado_de_perros
+    
+    
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)   
+        contexto['formulario'] = BuscarPerroFormulario()
+        return contexto
+    
+    
+class ModificarPerro(LoginRequiredMixin, UpdateView):
+    model = Perro
+    template_name = "inicio/CBV/modificar_perro_CBV.html"
+    fields = ['nombre', 'edad', 'descripcion']
+    success_url = reverse_lazy('inicio:listar_perros')
+      
+class EliminarPerro(LoginRequiredMixin, DeleteView):
+    model = Perro
+    template_name = "inicio/CBV/eliminar_perro_CBV.html"
+    success_url = reverse_lazy('inicio:listar_perros')
+
+class MostrarPerro(DetailView):
+    model = Perro
+    template_name = "inicio/CBV/mostrar_perro_CBV.html"
+

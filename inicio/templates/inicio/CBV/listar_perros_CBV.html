@@ -16,21 +16,17 @@ Listado de Perros
     {{formulario}}
     <button>Buscar</button>
 </form>
+
 {% if perros %}
 {% for perro in perros %}
-{% comment "" %}<li>Nombre: {{perro.nombre}} - Edad: {{perro.edad}}</li>
-{% endcomment %}
 <li>
     {{perro}}
-    <a href={% url 'inicio:eliminar_perro' perro.id%}>Eliminar</a>
+    <a href={% url 'inicio:mostrar_perro' perro.id%}>Ver mas</a>
     <a href={% url 'inicio:modificar_perro' perro.id%}>Modificar</a>
+    <a href={% url 'inicio:eliminar_perro' perro.id%}>Eliminar</a>
 </li>
 {% endfor %}
 {% else %}
 <p>No se encontraron datos cargados.</p>
 {% endif %}
 {% endblock contenido %}
-    
-
-
- 
