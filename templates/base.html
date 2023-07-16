@@ -5,7 +5,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="author" content="Anabella Bertola" />
         {% block title_head %}
         <title>Template Base</title>
         {% endblock title_head %}
@@ -24,8 +24,8 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="navbar-brand" href= {% url 'inicio:inicio' %}>Inicio</a>
-                <a class="navbar-brand" href= {% url 'inicio:prueba' %}>Prueba</a>
-                <a class="navbar-brand" href= {% url 'inicio:listar_perros' %}>Perros</a>
+                <a class="navbar-brand" href= {% url 'inicio:acerca_de_mi' %}>Acerca de mi</a>
+                <a class="navbar-brand" href= {% url 'inicio:listar_autos' %}>Autos</a>
                 {% if request.user.is_authenticated %}
                 {% if request.user.infoextra.avatar %}
                 <img src={{request.user.infoextra.avatar.url}} alt="" height='40px'>

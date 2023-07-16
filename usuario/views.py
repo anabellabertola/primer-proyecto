@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from usuario.form import MiFormularioDeCreacionDeUsuario, MiFormularioDeEdicionDeDatosDeUsuario
 from django.urls import reverse_lazy
 from usuario.models import InfoExtra
-# Create your views here.
+
 
 def login(request):
     

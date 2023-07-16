@@ -2,17 +2,17 @@ from django import forms
 from ckeditor.fields import RichTextFormField
 
 
-class PerroFormularioBase(forms.Form):
+class AutoFormularioBase(forms.Form):
     nombre = forms.CharField(max_length=20)
-    edad = forms.IntegerField()
+    marca = forms.IntegerField()
     descripcion = RichTextFormField()
 
 
-class CrearPerroFormulario(PerroFormularioBase):
+class CrearAutoFormulario(AutoFormularioBase):
     ...
     
-class ModificarPerroFormulario(PerroFormularioBase):
+class ModificarAutoFormulario(AutoFormularioBase):
     ...
     
-class BuscarPerroFormulario(forms.Form):
+class BuscarAutoFormulario(forms.Form):
     nombre = forms.CharField(max_length=20, required=False)

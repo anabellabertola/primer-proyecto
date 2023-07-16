@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-<title>Crear Perro</title>
+<title>Crear Auto</title>
 {% endblock title_head %}
 
 {% block h1_header %}
-Crear Perro
+Crear Auto
 {% endblock h1_header %}
 
 {% block contenido %}
-<form action={% url 'inicio:crear_perro' %} method="POST">
+<form action={% url 'inicio:crear_auto' %} method="POST">
     {% csrf_token %}
     <table>
         {{form}}

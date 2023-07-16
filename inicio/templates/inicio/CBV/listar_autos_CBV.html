@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+<title>Autos</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+Listado de Autos
+{% endblock h1_header %}
+
+{% block contenido %}
+<button>
+    <a class="navbar-brand" href= {% url 'inicio:crear_auto' %}>Crear auto</a>
+</button>
+<form action="" method="get">
+    {{formulario}}
+    <button>Buscar</button>
+</form>
+
+{% if autos %}
+{% for auto in autos %}
+<li>
+    {{auto}}
+    <a href={% url 'inicio:mostrar_auto' auto.id%}>Ver mas</a>
+    <a href={% url 'inicio:modificar_auto' auto.id%}>Modificar</a>
+    <a href={% url 'inicio:eliminar_auto' auto.id%}>Eliminar</a>
+</li>
+{% endfor %}
+{% else %}
+<p>No se encontraron datos cargados.</p>
+{% endif %}
+{% endblock contenido %}

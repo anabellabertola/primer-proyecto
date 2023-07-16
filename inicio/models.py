@@ -1,12 +1,10 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 
-# Create your models here.
-
-class Perro(models.Model):
+class Auto(models.Model):
     nombre = models.CharField(max_length=20)
-    edad = models.IntegerField()
+    marca = models.CharField(max_length=20)
     descripcion = RichTextField(null=True)
     
     def __str__(self):
-        return f"Perro: {self.nombre} - Edad: {self.edad}"
+        return f"Auto: {self.nombre} - Marca: {self.marca}"

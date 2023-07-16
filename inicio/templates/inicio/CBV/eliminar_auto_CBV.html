@@ -1,21 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-<title>Crear Perro</title>
+<title>Eliminar Auto</title>
 {% endblock title_head %}
 
 {% block h1_header %}
-Crear Perro
+Eliminar Auto
 {% endblock h1_header %}
 
 {% block contenido %}
-<form action="" method="POST">
+<form action= {% url 'inicio:eliminar_auto' auto.id %} method="POST">
     {% csrf_token %}
-    <table>
-        {{form}}
-        {{form.media}}
-    </table>
-
-    <button>Crear</button>
+    <p>Confirma el borrado de {{auto}}</p>
+    <button>Confirmar</button>
 </form>
 {% endblock contenido %}

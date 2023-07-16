@@ -2,122 +2,33 @@ from typing import Any, Dict
 from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
-from inicio.models import Perro
+from inicio.models import Auto
 from django.shortcuts import render, redirect
-from inicio.form import CrearPerroFormulario, BuscarPerroFormulario, ModificarPerroFormulario
+from inicio.form import CrearAutoFormulario, BuscarAutoFormulario, ModificarAutoFormulario
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-#v1
-
-#def inicio(request):
- #   return HttpResponse('Hola soy tu inicio')
-
-#v2
-#def inicio(resquest):
- #   archivo = open(r'C:\Users\anabe\OneDrive\Escritorio\Mi_primer_django\templates\inicio.html', 'r')
-  #  
-   # template = Template(archivo.read())
-    #
-   # archivo.close()
-   # 
-  #  segundos = datetime.now().second
-   # 
-   # diccionario = {
-    #    'mensaje': 'Este es el mensaje de inicio...',
-     #   'segundos': segundos,
-       #  'segundo_par': segundos%2 == 0,
-       # 'segundo_redondo': segundos%10 == 0,
-       # 'listado_de_numeros': list(range(25))
-    #}
- #   
-#
-    #contexto = Context(diccionario)
-    #
-    #renderizar_template = template.render(contexto)
-    #
-    #return HttpResponse(renderizar_template)
-    
-    
-    #V3
-    
-#def inicio(resquest):
-    
-   # template = loader.get_template('inicio.html')
-    
-    #segundos = datetime.now().second
-   # diccionario = {
-    #    'mensaje': 'Este es el mensaje de inicio...',
-    #    'segundos': segundos,
-   #     'segundo_par': segundos%2 == 0,
-  #      'segundo_redondo': segundos%10 == 0,
-  #      'listado_de_numeros': list(range(25))
-   #}
-    
-   # contexto = Context(diccionario)
-    #renderizar_template = template.render(contexto)
-  #  renderizar_template = template.render(diccionario)
- #   return HttpResponse(renderizar_template)
 
 
-#def segunda_vista(request):
- #   return HttpResponse('<h1>Soy la segunda vista</h1>')
-
-#def fecha_actual(request):
-  #  fecha = datetime.now()
- #   return HttpResponse(f'<h1>Fecha actual: {fecha}</h1>')
-
-#def saludar(request):
- #   return HttpResponse('Bienvenido/a!!!')
-
-#def bienvenida(request, nombre, apellido):
-  #  return HttpResponse(f'Bienvenido/a {nombre.title()} {apellido.title()}!!!')
-
-#def crear_perro(request, nombre, edad):
-   # template = loader.get_template('crear_perro.html')
-   # perro = Perro(nombre=nombre, edad=edad)
-   # perro.save()
-   # diccionario = {
-   #    'perro': perro,
-   # }
-    
-   # renderizar_template = template.render(diccionario)
-  #  return HttpResponse(renderizar_template)
-
-
-
-
-
-#v4
 @login_required
-def prueba(request):
-    
-   # template = loader.get_template('inicio.html')
+def acerca_de_mi(request):
     
     segundos = datetime.now().second
     diccionario = {
-        'mensaje': 'Este es el mensaje de inicio...',
-        'segundos': segundos,
-        'segundo_par': segundos%2 == 0,
-        'segundo_redondo': segundos%10 == 0,
-        'listado_de_numeros': list(range(25))
+        'mensaje': 'Mi nombre de Anabella Bertola,soy alumna de CoderHouse, tengo 28 años y vivo en Rosario.Esta es una pagina informativa a traves de listado de autos alta gama de distintas marcas y modelos, donde podran ver mas informacion de la descripcion',
     }
     
-   # contexto = Context(diccionario)
-    #renderizar_template = template.render(contexto)
-   # renderizar_template = template.render(diccionario)
-    #return HttpResponse(renderizar_template)
-    return render(request, 'inicio/prueba.html', diccionario)
+    return render(request, 'inicio/acerca_de_mi.html', diccionario)
 
 
 def inicio(request):
-  return render(request, 'inicio/inicio.html')
+ return render(request, 'inicio/inicio.html')
 
-def segunda_vista(request):
-    return HttpResponse('<h1>Soy la segunda vista</h1>')
+def primer_vista(request):
+    return HttpResponse('<h1>Soy la primer vista</h1>')
 
 def fecha_actual(request):
     fecha = datetime.now()
@@ -129,138 +40,78 @@ def saludar(request):
 def bienvenida(request, nombre, apellido):
     return HttpResponse(f'Bienvenido/a {nombre.title()} {apellido.title()}!!!')
 
-#v1
-#def crear_perro(request, nombre, edad):
- #   template = loader.get_template('crear_perro.html')
-  #  perro = Perro(nombre=nombre, edad=edad)
-  #  perro.save()
-   # diccionario = {
-   #    'perro': perro,
-   # }
-    #
-   # renderizar_template = template.render(diccionario)
-    #return HttpResponse(renderizar_template)
-  
-  #v2  
-#def crear_perro(request, nombre, edad):
- #   perro = Perro(nombre=nombre, edad=edad)
-  #  perro.save()
-  #  diccionario = {
-  #     'perro': perro,
-  #  }
-  #  
-  #  return render(request, 'inicio/crear_perro.html', diccionario)
-  
-  #v3 
-  
-#def crear_perro(request):
- #   print('================================')
-  #  print('================================')
-  #  print(request.POST)
-  #  print('================================')
-  #  print('================================')
-  #  print(request.GET)
- #   print('================================')
- #   print('================================')
-    
- #   diccionario = {}
-    
- #   if request.method == "POST":
- #       perro = Perro(nombre=request.POST['nombre'], edad=request.POST['edad'])
- #       perro.save()
- #       diccionario['perro'] = perro
-        
- #   return render(request, 'inicio/crear_perro.html', diccionario) 
-
-
-#v4  
-#def crear_perro(request):
- #   
-  #  if request.method == "POST":
-   #     formulario = CrearPerroFormulario(request.POST)
-   #     if formulario.is_valid():
-   #         info = formulario.cleaned_data
-   #         perro = Perro(nombre=info['nombre'], edad=info['edad'])
-   #         perro.save()
-   #         return redirect('inicio:listar_perros')               
-   #     else:
-   #         return render(request, 'inicio/crear_perro.html', {'formulario': formulario})               
-    
-    #formulario = CrearPerroFormulario()
-   # return render(request, 'inicio/crear_perro.html', {'formulario': formulario})
-  
-def listar_perros(request):
-    formulario = BuscarPerroFormulario(request.GET)
+def listar_autos(request):
+    formulario = BuscarAutoFormulario(request.GET)
     if formulario.is_valid():
         nombre_a_buscar = formulario.cleaned_data['nombre']
-        listado_de_perros = Perro.objects.filter(nombre__icontains=nombre_a_buscar)
+        listado_de_autos = Auto.objects.filter(nombre__icontains=nombre_a_buscar)
         
-    formulario = BuscarPerroFormulario()        
-    return render(request, 'inicio/listar_perros.html', {'formulario': formulario, 'perros': listado_de_perros})
+    formulario = BuscarAutoFormulario()        
+    return render(request, 'inicio/listar_autos.html', {'formulario': formulario, 'autos': listado_de_autos})
   
-def eliminar_perro(request, perro_id):
+def eliminar_auto(request, auto_id):
     
-    perro = Perro.objects.get(id=perro_id)
-    perro.delete()
+    auto = Auto.objects.get(id=auto_id)
+    auto.delete()
     
-    return redirect('inicio:listar_perros')
+    return redirect('inicio:listar_autos')
 
-def modificar_perro(request, perro_id):
-    perro_a_modificar = Perro.objects.get(id=perro_id)               
+def modificar_auto(request, auto_id):
+    auto_a_modificar = Auto.objects.get(id=auto_id)               
   
     if request.method == 'POST':
-        formulario = ModificarPerroFormulario(request.POST)
+        formulario = ModificarAutoFormulario(request.POST)
         if formulario.is_valid():
             info = formulario.cleaned_data
-            perro_a_modificar.nombre = info['nombre']
-            perro_a_modificar.edad = info['edad']
-            perro_a_modificar.save()
-            return redirect('inicio:listar_perros')
+            auto_a_modificar.nombre = info['nombre']
+            auto_a_modificar.marca = info['marca']
+            auto_a_modificar.save()
+            return redirect('inicio:listar_autos')
         else:
-            return render(request, 'inicio/modificar_perro.html', {'formulario': formulario})
+            return render(request, 'inicio/modificar_auto.html', {'formulario': formulario})
     
-    formulario = ModificarPerroFormulario(initial={'nombre': perro_a_modificar.nombre, 'edad': perro_a_modificar.edad})
-    return render(request, 'inicio/modificar_perro.html', {'formulario': formulario})
+    formulario = ModificarAutoFormulario(initial={'nombre': auto_a_modificar.nombre, 'marca': auto_a_modificar.marca})
+    return render(request, 'inicio/modificar_auto.html', {'formulario': formulario})
 
 
-class CrearPerro(CreateView):
-    model = Perro
-    template_name = 'inicio/CBV/crear_perro_CBV.html'
-    fields = ['nombre', 'edad', 'descripcion']
-    success_url = reverse_lazy('inicio:listar_perros')
+class CrearAuto(CreateView):
+    model = Auto
+    template_name = 'inicio/CBV/crear_auto_CBV.html'
+    fields = ['nombre', 'marca', 'descripcion']
+    success_url = reverse_lazy('inicio:listar_autos')
     
-class ListarPerros(ListView):
-    model = Perro
-    template_name = "inicio/CBV/listar_perros_CBV.html"
-    context_object_name = 'perros'
+class ListarAutos(ListView):
+    model = Auto
+    template_name = "inicio/CBV/listar_autos_CBV.html"
+    context_object_name = 'autos'
     
     def get_queryset(self):
-        listado_de_perros = []
-        formulario = BuscarPerroFormulario(self.request.GET)
+        listado_de_autos = []
+        formulario = BuscarAutoFormulario(self.request.GET)
         if formulario.is_valid():
             nombre_a_buscar = formulario.cleaned_data['nombre']
-            listado_de_perros = Perro.objects.filter(nombre__icontains=nombre_a_buscar)
-        return listado_de_perros
+            listado_de_autos = Auto.objects.filter(nombre__icontains=nombre_a_buscar)
+        return listado_de_autos
     
     
     def get_context_data(self, **kwargs):
         contexto = super().get_context_data(**kwargs)   
-        contexto['formulario'] = BuscarPerroFormulario()
+        contexto['formulario'] = BuscarAutoFormulario()
         return contexto
     
     
-class ModificarPerro(LoginRequiredMixin, UpdateView):
-    model = Perro
-    template_name = "inicio/CBV/modificar_perro_CBV.html"
-    fields = ['nombre', 'edad', 'descripcion']
-    success_url = reverse_lazy('inicio:listar_perros')
+class ModificarAuto(LoginRequiredMixin, UpdateView):
+    model = Auto
+    template_name = "inicio/CBV/modificar_auto_CBV.html"
+    fields = ['nombre', 'marca', 'descripcion']
+    success_url = reverse_lazy('inicio:listar_autos')
       
-class EliminarPerro(LoginRequiredMixin, DeleteView):
-    model = Perro
-    template_name = "inicio/CBV/eliminar_perro_CBV.html"
-    success_url = reverse_lazy('inicio:listar_perros')
+class EliminarAuto(LoginRequiredMixin, DeleteView):
+    model = Auto
+    template_name = "inicio/CBV/eliminar_auto_CBV.html"
+    success_url = reverse_lazy('inicio:listar_autos')
 
-class MostrarPerro(DetailView):
-    model = Perro
-    template_name = "inicio/CBV/mostrar_perro_CBV.html"
+class MostrarAuto(DetailView):
+    model = Auto
+    template_name = "inicio/CBV/mostrar_auto_CBV.html"
 
