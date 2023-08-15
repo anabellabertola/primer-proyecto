@@ -65,19 +65,21 @@ def modificar_auto(request, auto_id):
             info = formulario.cleaned_data
             auto_a_modificar.nombre = info['nombre']
             auto_a_modificar.marca = info['marca']
+            auto_a_modificar.imagen = info['imagen']
+            auto_a_modificar.fecha_fabricacion['fecha_fabricacion']
             auto_a_modificar.save()
             return redirect('inicio:listar_autos')
         else:
             return render(request, 'inicio/modificar_auto.html', {'formulario': formulario})
     
-    formulario = ModificarAutoFormulario(initial={'nombre': auto_a_modificar.nombre, 'marca': auto_a_modificar.marca})
+    formulario = ModificarAutoFormulario(initial={'nombre': auto_a_modificar.nombre, 'marca': auto_a_modificar.marca, 'imagen': auto_a_modificar.imagen, 'fecha_fabricacion': auto_a_modificar.fecha_fabricacion})
     return render(request, 'inicio/modificar_auto.html', {'formulario': formulario})
 
 
 class CrearAuto(CreateView):
     model = Auto
     template_name = 'inicio/CBV/crear_auto_CBV.html'
-    fields = ['nombre', 'marca', 'descripcion']
+    fields = ['nombre', 'marca', 'descripcion', 'imagen', 'fecha_fabricacion']
     success_url = reverse_lazy('inicio:listar_autos')
     
 class ListarAutos(ListView):
@@ -103,7 +105,7 @@ class ListarAutos(ListView):
 class ModificarAuto(LoginRequiredMixin, UpdateView):
     model = Auto
     template_name = "inicio/CBV/modificar_auto_CBV.html"
-    fields = ['nombre', 'marca', 'descripcion']
+    fields = ['nombre', 'marca', 'descripcion', 'imagen', 'fecha_fabricacion']
     success_url = reverse_lazy('inicio:listar_autos')
       
 class EliminarAuto(LoginRequiredMixin, DeleteView):

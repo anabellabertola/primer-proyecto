@@ -6,6 +6,9 @@ class AutoFormularioBase(forms.Form):
     nombre = forms.CharField(max_length=20)
     marca = forms.IntegerField()
     descripcion = RichTextFormField()
+    imagen = forms.ImageField()
+    fecha_fabricacion = forms.DateField()
+
 
 
 class CrearAutoFormulario(AutoFormularioBase):

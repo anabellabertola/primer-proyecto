@@ -9,6 +9,8 @@
 {% endblock h1_header %}
 
 {% block contenido %}
-<li>Marca: {{perro.marca}}</li>
-<li>Descripcion: {{auto.descripcion | safe}}</li>
+<li>Marca: {{auto.marca}}</li>
+<li><img src="{{auto.imagen}}" alt="imagen del auto"></li>
+<li>Fecha de fabricacion: {{auto.fecha_fabricacion}}</li>
+<li>Descripcion: {{auto.descripcion |safe}}</li>
 {% endblock contenido %}

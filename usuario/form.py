@@ -19,6 +19,7 @@ class MiFormularioDeEdicionDeDatosDeUsuario(UserChangeForm):
     first_name = forms.CharField(label='Nombre', max_length=20)
     last_name = forms.CharField(label='Apellido', max_length=20)
     avatar = forms.ImageField(required=False)
+ 
     
     class Meta:
         model = User
