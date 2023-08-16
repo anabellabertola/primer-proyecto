@@ -4,9 +4,11 @@ from .models import Auto
 
 
 class AutoFormularioBase(forms.Form):
-    class Meta:
-        models = Auto
-        fields =['nombre', 'marca', 'descripcion', 'imagen', 'fecha_fabricacion']
+   nombre = forms.CharField(max_length=20)
+   marca = forms.IntegerField()
+   descripcion = RichTextFormField()
+   imagen = forms.ImageField()
+   fecha_fabricacion = forms.DateField()
 
 
 class CrearAutoFormulario(AutoFormularioBase):

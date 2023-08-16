@@ -4,7 +4,7 @@ from datetime import datetime
 from django.template import Template, Context, loader
 from inicio.models import Auto
 from django.shortcuts import render, redirect
-from inicio.form import CrearAutoFormulario, BuscarAutoFormulario, ModificarAutoFormulario, AutoFormularioBase
+from inicio.form import CrearAutoFormulario, BuscarAutoFormulario, ModificarAutoFormulario
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -79,7 +79,7 @@ def modificar_auto(request, auto_id):
 class CrearAuto(CreateView):
     model = Auto
     template_name = 'inicio/CBV/crear_auto_CBV.html'
-    form_class = AutoFormularioBase
+    fields = ['nombre', 'marca', 'descripcion', 'imagen', 'fecha_fabricacion']
     success_url = reverse_lazy('inicio:listar_autos')
     
 class ListarAutos(ListView):

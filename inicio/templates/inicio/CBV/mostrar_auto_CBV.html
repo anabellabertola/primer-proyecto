@@ -10,7 +10,8 @@
 
 {% block contenido %}
 <li>Marca: {{auto.marca}}</li>
-<li><img src="{{auto.imagen}}" alt="imagen del auto"></li>
+<li><img src= {{auto.imagen}} alt="imagen del auto"></li>
 <li>Fecha de fabricacion: {{auto.fecha_fabricacion}}</li>
 <li>Descripcion: {{auto.descripcion |safe}}</li>
+<li>Auto: {{auto}}
 {% endblock contenido %}
