@@ -9,7 +9,7 @@ Crear Auto
 {% endblock h1_header %}
 
 {% block contenido %}
-<form action={% url 'inicio:crear_auto' %} method="POST">
+<form action={% url 'inicio:crear_auto' %} method="POST" enctype='multipart/form-data'>
     {% csrf_token %}
     <table>
         {{form}}

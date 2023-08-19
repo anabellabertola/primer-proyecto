@@ -13,7 +13,7 @@
 <li>Marca: {{auto.marca}}</li>
 <li>Descripcion: {{auto.descripcion | safe}}</li>
 <li>Fecha de fabricacion: {{auto.fecha_fabricacion}}</li>
-{% if  %}
+{% if auto.imagen%}
 <li><img src = {{auto.imagen.url}} alt ="iamgen del auto"></li>
 {% endif %}
 
