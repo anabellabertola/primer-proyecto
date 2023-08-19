@@ -40,41 +40,6 @@ def saludar(request):
 def bienvenida(request, nombre, apellido):
     return HttpResponse(f'Bienvenido/a {nombre.title()} {apellido.title()}!!!')
 
-def listar_autos(request):
-    formulario = BuscarAutoFormulario(request.GET, request.FILE)
-    if formulario.is_valid():
-        nombre_a_buscar = formulario.cleaned_data['nombre']
-        listado_de_autos = Auto.objects.filter(nombre__icontains=nombre_a_buscar)
-        
-    formulario = BuscarAutoFormulario()        
-    return render(request, 'inicio/listar_autos.html', {'formulario': formulario, 'autos': listado_de_autos})
-  
-def eliminar_auto(request, auto_id):
-    
-    auto = Auto.objects.get(id=auto_id)
-    auto.delete()
-    
-    return redirect('inicio:listar_autos')
-
-def modificar_auto(request, auto_id):
-    auto_a_modificar = Auto.objects.get(id=auto_id)               
-  
-    if request.method == 'POST':
-        formulario = ModificarAutoFormulario(request.POST, request.FILE)
-        if formulario.is_valid():
-            info = formulario.cleaned_data
-            auto_a_modificar.nombre = info['nombre']
-            auto_a_modificar.marca = info['marca']
-            auto_a_modificar.fecha_fabricacion['fecha_fabricacion']
-            auto_a_modificar.imagen = info['imagen']
-            auto_a_modificar.save()
-            return redirect('inicio:listar_autos')
-        else:
-            return render(request, 'inicio/modificar_auto.html', {'formulario': formulario})
-    
-    formulario = ModificarAutoFormulario(initial={'nombre': auto_a_modificar.nombre, 'marca': auto_a_modificar.marca, 'fecha_fabricacion': auto_a_modificar.fecha_fabricacion, 'imagen': auto_a_modificar.imagen})
-    return render(request, 'inicio/modificar_auto.html', {'formulario': formulario})
-
 
 class CrearAuto(CreateView):
     model = Auto
@@ -119,24 +84,7 @@ class MostrarAuto(DetailView):
     model = Auto
     template_name = "inicio/CBV/mostrar_auto_CBV.html"
     
-    def mostrar_auto(request, auto_id):
-      info_extra_user = request.user.infoextra
-      if request.method == 'POST':
-        formulario = CrearAutoFormulario(request.POST, request.FILES, instance=request.user)
-        if formulario.is_valid():
-            
-            imagen = formulario.cleaned_data.get('imagen')
-            if imagen:
-                info_extra_user.imagen = imagen
-                info_extra_user.save()
-            
-            
-            formulario.save()
-            return redirect('inicio:inicio')
-      else:
-        formulario = CrearAutoFormulario(initial={'imagen': info_extra_user.imagen}, instance=request.user)
-    
-      return render(request, 'inicio/crear_auto.html', {'formulario': formulario})
+
     
     
 

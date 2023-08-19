@@ -1,12 +1,12 @@
 from django.db import models
-from ckeditor.fields import RichTextFormField
+from ckeditor.fields import RichTextField
 from django.db import models
 
 
 class Auto(models.Model):
     nombre = models.CharField(max_length=20)
     marca = models.CharField(max_length=20)
-    descripcion = models.TextField(null=True)
+    descripcion = RichTextField(null=True)
     fecha_fabricacion = models.DateField()
     imagen = models.ImageField(null=True, blank=True, upload_to='imagenes/')
     

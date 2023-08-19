@@ -11,8 +11,10 @@
 {% block contenido %}
 <form action={% url 'inicio:mostrar_auto' auto.id %} method="POST" enctype='multipart/form-data'>
 <li>Marca: {{auto.marca}}</li>
-<li>Descripcion: {{auto.descripcion}}</li>
+<li>Descripcion: {{auto.descripcion | safe}}</li>
 <li>Fecha de fabricacion: {{auto.fecha_fabricacion}}</li>
-<img src={{request.user.infoextra.imagen.url}} alt="" height='40px'>
+{% if  %}
+<li><img src = {{auto.imagen.url}} alt ="iamgen del auto"></li>
+{% endif %}
 
 {% endblock contenido %}
